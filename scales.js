@@ -2,6 +2,7 @@ const TONE = 2;
 const HALFTONE = 1;
 
 const NOTES = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b'];
+const circleOfFifths = ['C', 'G', 'D', 'A', 'E', 'B', 'F#', 'Db', 'Ab', 'Eb', 'Bb', 'F'];
 
 let scales = new Map();
 scales.set("major", [TONE, TONE, HALFTONE, TONE, TONE, TONE, HALFTONE]);
@@ -44,17 +45,15 @@ window.addEventListener("load", function() {
         return;
       }
       
-      const startingScale = Math.floor(Math.random() * 12);
-      const startingDegree = Math.floor(Math.random() * 8) + 1;
-      
       scaleSelect.disabled = true;
       event.target.innerHTML = "End";
       event.target.classList.remove("light");
       event.target.classList.add("dark");
       
-      document.getElementById("scale-name").innerHTML = NOTES[startingScale].toUpperCase() + " " + scaleSelect.value;
+      const startingScale = Math.floor(Math.random() * 12);
+      const startingDegree = Math.floor(Math.random() * 8) + 1;
+      
+      document.getElementById("scale-name").innerHTML = circleOfFifths[startingScale] + " " + scaleSelect.value;
       document.getElementById("scale-degree").innerHTML = startingDegree;
-      
-      
     });
 });
