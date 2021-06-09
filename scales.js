@@ -16,14 +16,6 @@ function getScaleDegree(scaleType, tonic, degree) {
   return NOTES[note % 12];
 }
 
-//const button = document.getElementById("button");
-//button.addEventListener("click", startPractice, false);
-
-function startPractice() {
-  let startingScale = Math.floor(Math.random() * 12);
-  let startingDegree = Math.floor(Math.random() * 12);
-}
-
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -38,4 +30,27 @@ window.addEventListener("load", function() {
 
       scaleSelect.appendChild(opt); 
     }
+    
+    document.getElementById("button").addEventListener("click", function(event) {
+      if (event.target.innerHTML === "End") {
+        scaleSelect.disabled = false;
+        event.target.innerHTML = "Begin";
+        
+        document.getElementById("scale-name").innerHTML = "";
+        document.getElementById("scale-degree").innerHTML = "";
+        
+        return;
+      }
+      
+      const startingScale = Math.floor(Math.random() * 12);
+      const startingDegree = Math.floor(Math.random() * 8) + 1;
+      
+      scaleSelect.disabled = true;
+      event.target.innerHTML = "End";
+      
+      document.getElementById("scale-name").innerHTML = NOTES[startingScale].toUpperCase() + " " + scaleSelect.value;
+      document.getElementById("scale-degree").innerHTML = startingDegree;
+      
+      
+    });
 });
