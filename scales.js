@@ -1,20 +1,27 @@
 const TONE = 2;
 const HALFTONE = 1;
 
-const NOTES = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b'];
-const circleOfFifths = ['C', 'G', 'D', 'A', 'E', 'B', 'F#', 'Db', 'Ab', 'Eb', 'Bb', 'F'];
+const majorFifths = ['C', 'G', 'D', 'A', 'E', 'B', 'F#', 'Db', 'Ab', 'Eb', 'Bb', 'F'];
+const minorFifths = ['a', 'e', 'b', 'f#', 'c#', 'g#', 'd#', 'bb', 'f', 'c', 'g', 'd'];
 
 let scales = new Map();
-scales.set("major", [TONE, TONE, HALFTONE, TONE, TONE, TONE, HALFTONE]);
+scales.set("major", {"construction": [TONE, TONE, HALFTONE, TONE, TONE, TONE, HALFTONE],
+                     "circleOfFifths": majorFifths});
+scales.set("natural minor", {"construction": [TONE, HALFTONE, TONE, TONE, HALFTONE, TONE, TONE],
+                             "circleOfFifths": minorFifths});
+scales.set("harmonic minor", {"construction": [TONE, HALFTONE, TONE, TONE, HALFTONE, TONE + HALFTONE, HALFTONE],
+                              "circleOfFifths": minorFifths});
+scales.set("melodic minor", {"construction": [TONE, HALFTONE, TONE, TONE, TONE, TONE, HALFTONE],
+                             "circleOfFifths": minorFifths});
 
 function getScaleDegree(scaleType, tonic, degree) {
-  let note = NOTES.indexOf(tonic.toLowerCase());
   let scale = scales.get(scaleType.toLowerCase());
+  let note = scale.circleOfFifths.indexOf(tonic.toLowerCase());
   
   for (let i = 0; i < degree - 1; i++)
     note += scale[i % scale.length];
     
-  return NOTES[note % 12];
+  return scale.circleOfFifths[note % 12];
 }
 
 function capitalizeFirstLetter(string) {
@@ -52,8 +59,9 @@ window.addEventListener("load", function() {
       
       const startingScale = Math.floor(Math.random() * 12);
       const startingDegree = Math.floor(Math.random() * 8) + 1;
+      const scaleName = scales.get(scaleSelect.value).circleOfFifths[startingScale];
       
-      document.getElementById("scale-name").innerHTML = circleOfFifths[startingScale] + " " + scaleSelect.value;
+      document.getElementById("scale-name").innerHTML = scaleName;
       document.getElementById("scale-degree").innerHTML = startingDegree;
     });
 });
