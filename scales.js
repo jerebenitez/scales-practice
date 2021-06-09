@@ -35,6 +35,8 @@ window.addEventListener("load", function() {
       if (event.target.innerHTML === "End") {
         scaleSelect.disabled = false;
         event.target.innerHTML = "Begin";
+        event.target.classList.remove("dark");
+        event.target.classList.add("light");
         
         document.getElementById("scale-name").innerHTML = "";
         document.getElementById("scale-degree").innerHTML = "";
@@ -47,6 +49,8 @@ window.addEventListener("load", function() {
       
       scaleSelect.disabled = true;
       event.target.innerHTML = "End";
+      event.target.classList.remove("light");
+      event.target.classList.add("dark");
       
       document.getElementById("scale-name").innerHTML = NOTES[startingScale].toUpperCase() + " " + scaleSelect.value;
       document.getElementById("scale-degree").innerHTML = startingDegree;
